@@ -76,7 +76,7 @@ function StatsCard({ stats }) {
     `;
 }
 
-function ElevationChart({ data, totalDistance, lineColor = '#3b82f6', showGrid = true }) {
+function ElevationChart({ data, totalDistance, lineColor = '#3b82f6', showGrid = false }) {
     const canvasRef = useRef(null);
     const chartRef = useRef(null);
 
@@ -174,7 +174,7 @@ function App() {
     // Customization State
     const [theme, setTheme] = useState('carbon');
     const [lineColor, setLineColor] = useState(THEMES.carbon.accent);
-    const [showGrid, setShowGrid] = useState(true);
+    const [showGrid, setShowGrid] = useState(false);
 
     // Sync line color when theme changes
     useEffect(() => {
@@ -221,46 +221,45 @@ function App() {
 
     return html`
         <div class="w-full theme-${theme}">
-            <h1>
-                GPX Visualizer
-                ${fileData?.fileName && html`<span style="color: var(--text-secondary); font-weight: 400; margin-left: 0.75rem; font-size: 1.25rem;">${fileData.fileName}</span>`}
-            </h1>
+            <header class="app-header">
+                <div class="header-top">
+                    <h1>GPX Visualizer</h1>
+                    ${fileData?.fileName && html`<span class="file-badge">${fileData.fileName}</span>`}
+                </div>
+                
+                <div class="controls-row">
+                    ${fileData ? html`
+                        <button class="btn" onClick=${() => setFileData(null)}>← Upload New</button>
+                        <div class="pill-nav">
+                            ${Object.entries(THEMES).map(([id, t]) => html`
+                                <button 
+                                    class="pill-btn ${theme === id ? 'active' : ''}" 
+                                    onClick=${() => setTheme(id)}
+                                >
+                                    ${t.name}
+                                </button>
+                            `)}
+                        </div>
+                        <div class="action-group">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" checked=${showGrid} onChange=${(e) => setShowGrid(e.target.checked)} />
+                                <span style="font-size:0.8rem; color:var(--text-secondary)">Show Grid</span>
+                            </label>
+                            <button class="btn btn-primary" onClick=${handleExport}>Export PNG</button>
+                        </div>
+                    ` : html`
+                        <div style="flex: 1; height: 1px;"></div> <!-- Spacer -->
+                    `}
+                </div>
+            </header>
             
             ${!fileData && html`
                 <${FileUpload} onUpload=${handleUpload} />
             `}
 
             ${fileData && html`
-                 <div class="flex justify-between items-center mb-4">
-                    <button class="btn" onClick=${() => setFileData(null)}>← Upload New</button>
-                    <div class="flex gap-4 items-center">
-                        <div class="flex gap-1">
-                            ${Object.entries(THEMES).map(([id, t]) => html`
-                                <button 
-                                    class="btn ${theme === id ? 'btn-primary' : ''}" 
-                                    onClick=${() => setTheme(id)}
-                                    style="padding: 0.25rem 0.75rem; font-size: 0.75rem;"
-                                >
-                                    ${t.name}
-                                </button>
-                            `)}
-                        </div>
-                        <div class="flex items-center gap-4" style="border-left: 1px solid var(--border); padding-left: 1rem; margin-left: 0.5rem;">
-                            <label class="flex items-center gap-2">
-                                <span style="font-size:0.8rem; color:var(--text-secondary)">Color</span>
-                                <input type="color" value=${lineColor} onInput=${(e) => setLineColor(e.target.value)} />
-                            </label>
-                             <label class="flex items-center gap-2">
-                                <input type="checkbox" checked=${showGrid} onChange=${(e) => setShowGrid(e.target.checked)} />
-                                 <span style="font-size:0.8rem; color:var(--text-secondary)">Grid</span>
-                            </label>
-                            <button class="btn btn-primary" onClick=${handleExport}>Export PNG</button>
-                        </div>
-                    </div>
-                </div>
-
                 <div ref=${exportRef} class="export-wrap" style="padding: 24px; background-color: var(--bg-app); border-radius: 12px;">
-                    <div class="card mb-4">
+                    <div class="card mb-4" style="padding: 0; overflow: hidden; border-width: 0;">
                         <${ElevationChart} data=${fileData.chartData} totalDistance=${fileData.stats.totalDistance} lineColor=${lineColor} showGrid=${showGrid} />
                     </div>
                     
@@ -268,7 +267,7 @@ function App() {
                 </div>
             `}
             
-            ${loading && html`<div>Loading...</div>`}
+            ${loading && html`<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">Processing GPX data...</div>`}
         </div>
     `;
 }

@@ -83,31 +83,95 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
+    padding: 4rem 2rem; /* Increased top padding for breathing room */
 }
 
 #root {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px; /* Slightly wider for better chart aspect ratio */
     display: flex;
     flex-direction: column;
-    gap: 2rem;
 }
 
-/* Typography */
+/* Header & Navigation */
+.app-header {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-bottom: 4rem; /* Significant gap between header and content */
+    width: 100%;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
 h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    background: linear-gradient(to right, #fff, #a1a1aa);
+    font-size: 3rem; /* Larger, bolder header */
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    margin: 0;
+    line-height: 1;
+    background: linear-gradient(to bottom right, #fff, #71717a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-h2 {
-    font-size: 1.25rem;
+.file-badge {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+}
+
+/* Pill Navigation for Themes */
+.pill-nav {
+    display: flex;
+    background: var(--bg-card);
+    padding: 4px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+}
+
+.pill-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pill-btn:hover {
+    color: var(--text-primary);
+}
+
+.pill-btn.active {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.action-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 }
 
 /* Cards */
@@ -268,4 +332,8 @@ h2 {
 /* Input overlay generic */
 input[type="file"] {
     display: none;
+}
+
+.gap-2 {
+    gap: 4px;
 }
