@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "gpxparser": "^3.0.8",
+    "kalmanjs": "^1.1.0"
+  },
+  "devDependencies": {
+    "simplify-js": "^1.2.4"
+  }
+}

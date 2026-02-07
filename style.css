@@ -1,0 +1,271 @@
+:root {
+    --bg-app: #09090b; /* zinc-950 */
+    --bg-card: #18181b; /* zinc-900 */
+    --bg-card-hover: #27272a; /* zinc-800 */
+    --border: #27272a; /* zinc-800 */
+    --text-primary: #f4f4f5; /* zinc-100 */
+    --text-secondary: #a1a1aa; /* zinc-400 */
+    --accent: #3b82f6; /* blue-500 */
+    --accent-glow: rgba(59, 130, 246, 0.5);
+    
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --font-sans: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Vintage Theme - Steel & Leather */
+.theme-vintage {
+    --bg-app: #fdfaf3;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f1f5f9;
+    --border: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --accent: #15803d; /* Racing Green */
+    --accent-glow: rgba(21, 128, 61, 0.2);
+}
+.theme-vintage h1 {
+    background: linear-gradient(to right, #1e293b, #64748b);
+    -webkit-background-clip: text;
+}
+.theme-vintage .stat-item {
+    background: #fff;
+}
+.theme-vintage .stat-item:hover {
+    background: #f8fafc;
+}
+
+/* Trail Theme - Earth & Forest */
+.theme-trail {
+    --bg-app: #1a1c18;
+    --bg-card: #242721;
+    --bg-card-hover: #2c3128;
+    --border: #383e32;
+    --text-primary: #e4e3da;
+    --text-secondary: #a4a99a;
+    --accent: #f97316; /* Burnt Orange */
+    --accent-glow: rgba(249, 115, 22, 0.3);
+}
+
+/* Glow Theme - Night Ride */
+.theme-glow {
+    --bg-app: #0a0118;
+    --bg-card: #14082e;
+    --bg-card-hover: #1f0e45;
+    --border: #2d1661;
+    --text-primary: #f0e7ff;
+    --text-secondary: #a78bfa;
+    --accent: #d946ef; /* Neon Pink */
+    --accent-glow: rgba(217, 70, 239, 0.5);
+}
+.theme-glow h1 {
+    background: linear-gradient(to right, #d946ef, #818cf8);
+    -webkit-background-clip: text;
+}
+.theme-glow .card {
+    box-shadow: 0 0 20px rgba(217, 70, 239, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+#root {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Typography */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    background: linear-gradient(to right, #fff, #a1a1aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Cards */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+    border-color: var(--text-secondary);
+}
+
+/* Drag & Drop Zone */
+.drop-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: rgba(255, 255, 255, 0.02);
+    color: var(--text-secondary);
+}
+
+.drop-zone:hover, .drop-zone.active {
+    border-color: var(--accent);
+    background-color: rgba(59, 130, 246, 0.05);
+    color: var(--text-primary);
+}
+
+.drop-zone-text {
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+.drop-zone-subtext {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    opacity: 0.7;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Force 3 columns for bespoke look */
+    gap: 0; /* Remove gap, use borders */
+    padding: 0; /* Clear padding from generic card */
+    overflow: hidden; /* For border radius */
+    background: transparent;
+    border: 1px solid var(--border);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    position: relative;
+    background: var(--bg-card);
+    transition: background 0.2s;
+}
+
+.stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 1px;
+    background: var(--border);
+}
+
+.stat-item:hover {
+    background: var(--bg-card-hover);
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-sans);
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 500;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    line-height: 1;
+    letter-spacing: -0.03em;
+}
+
+.stat-unit {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    margin-left: 0.25rem;
+    vertical-align: baseline;
+    font-weight: 400;
+}
+
+/* Chart Container */
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    transition: all 0.2s;
+    font-family: inherit;
+    font-size: 0.875rem;
+}
+
+.btn:hover {
+    background-color: var(--bg-card-hover);
+    border-color: var(--text-secondary);
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: white;
+    border: 1px solid var(--accent);
+}
+
+.btn-primary:hover {
+    background-color: #2563eb; /* blue-600 */
+    border-color: #2563eb;
+}
+
+/* Utilities */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-4 { gap: 1rem; }
+.mt-4 { margin-top: 1rem; }
+.mb-4 { margin-bottom: 1rem; }
+.w-full { width: 100%; }
+
+/* Input overlay generic */
+input[type="file"] {
+    display: none;
+}
